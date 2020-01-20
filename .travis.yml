@@ -1,0 +1,28 @@
+sudo: required
+services:
+  - docker
+before_install:
+  - curl https://sdk.cloud.google.com | bash > /dev/null;
+  - source $HOME/google-cloud-sdk/path.bash.inc
+  - gcloud components update kubectl
+  - gcloud auth activate-service-account --key-file service-account.json
+  - openssl aes-256-cbc -K $encrypted_0c35eebf403c_key -iv $encrypted_0c35eebf403c_iv -in service-account.json.enc -out service-account.json -d
+
+# Steps:
+#  - Install Google Cloud SDK CLI
+#  - Configure the SDK without Google Cloud auth info
+#  - Login to Docker CLI
+#  - Build the 'test' version of multi-client
+#  - Run tests
+#  - If tests are successful, run a script to deploy newest images
+#  - Build all our images, tag each one, push each to docker hub
+#  - Apply all configs in the 'k8s' folder
+#  - Imperatively set latest images on each deployment
+
+
+# To create a Service Account:
+#  - Create a Service Account (IAM & Admin > Service Accounts > Create service account)
+#  - Download service account credentials in a json file
+#  - Download and install the Travis CLI
+#  - Encrypt and update the json file to our Travis account
+#  - In travis.yml, add code to unencrypt the json file and load it into GCloud SDK
