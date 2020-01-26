@@ -6,14 +6,14 @@ env:
     - SHA=$(git rev-parse HEAD)
     - CLOUDSDK_CORE_DISABLE_PROMPTS=1
 before_install:
-  - openssl aes-256-cbc -K $encrypted_0c35eebf403c_key -iv $encrypted_0c35eebf403c_iv -in service-account.json.enc -out service-account.json -d
+  - openssl aes-256-cbc -K $encrypted_b0d01fafaafe_key -iv $encrypted_b0d01fafaafe_iv -in service-account.json.enc -out service-account.json -d
   - curl https://sdk.cloud.google.com | bash > /dev/null;
   - source $HOME/google-cloud-sdk/path.bash.inc
   - gcloud components update kubectl
   - gcloud auth activate-service-account --key-file service-account.json
-  - gcloud config set project multi-k8s-265417 #Project ID (not the name!)
-  - gcloud config set compute/zone us-central1-a #Cluster location
-  - gcloud container clusters get-credentials multi-cluster #Cluster name
+  - gcloud config set project multi-k8s-266317 #Project ID (not the name!)
+  - gcloud config set compute/zone europe-west1-b #Cluster location
+  - gcloud container clusters get-credentials standard-cluster-1 #Cluster name
   - echo "$DOCKER_PASSWORD" | docker login -u "$DOCKER_USERNAME" --password-stdin
   - docker build -t zagorh/react-test -f ./client/Dockerfile.dev ./client
 
